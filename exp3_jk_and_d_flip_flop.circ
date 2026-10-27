@@ -54,23 +54,19 @@ This file is intended to be loaded by Logisim (http://www.cburch.com/logisim/).
     <a name="clabelup" val="east"/>
     <a name="clabelfont" val="SansSerif plain 12"/>
 
-    <!-- Title and Documentation -->
+    <!-- Document Header -->
     <comp lib="6" loc="(500,30)" name="Text">
-      <a name="text" val="EXPERIMENT 3: VERIFICATION OF JK &amp; D FLIP-FLOPS"/>
+      <a name="text" val="EXPERIMENT 3: VERIFICATION OF JK AND D FLIP-FLOPS"/>
       <a name="font" val="SansSerif bold 18"/>
     </comp>
     <comp lib="6" loc="(500,50)" name="Text">
-      <a name="text" val="Top: Integrated Library Flip-Flops | Bottom: Gate-Level Implementations (NAND Gates)"/>
+      <a name="text" val="Top: Integrated Library Components | Bottom: Gate-Level (NAND Gates) Implementations"/>
       <a name="font" val="SansSerif plain 12"/>
     </comp>
 
-    <!-- ========================================================================= -->
-    <!-- SECTION 1: INTEGRATED FLIP-FLOPS                                          -->
-    <!-- ========================================================================= -->
-
     <!-- ================= PART A: JK FLIP-FLOP (LIBRARY) ================= -->
     <comp lib="6" loc="(230,85)" name="Text">
-      <a name="text" val="PART A: J-K FLIP-FLOP (INTEGRATED COMPONENT)"/>
+      <a name="text" val="PART A: JK FLIP-FLOP (INTEGRATED COMPONENT)"/>
       <a name="font" val="SansSerif bold 13"/>
     </comp>
 
@@ -91,7 +87,7 @@ This file is intended to be loaded by Logisim (http://www.cburch.com/logisim/).
       <a name="label" val="CLR_JK (Async)"/>
     </comp>
 
-    <!-- J-K Flip-Flop Component (loc = 260, 160) -->
+    <!-- JK Flip-Flop Component (loc = 260, 160) -->
     <comp lib="4" loc="(260,160)" name="J-K Flip-Flop">
       <a name="trigger" val="falling"/>
       <a name="label" val="JK-FF"/>
@@ -231,19 +227,27 @@ This file is intended to be loaded by Logisim (http://www.cburch.com/logisim/).
     </comp>
 
     <!-- Gate-Level JK Inputs -->
-    <comp lib="0" loc="(70,450)" name="Pin">
+    <comp lib="0" loc="(60,450)" name="Pin">
       <a name="tristate" val="false"/>
       <a name="label" val="GATE_J"/>
     </comp>
-    <comp lib="0" loc="(70,500)" name="Clock">
+    <comp lib="0" loc="(60,500)" name="Clock">
       <a name="label" val="GATE_CLK_JK"/>
     </comp>
-    <comp lib="0" loc="(70,550)" name="Pin">
+    <comp lib="0" loc="(60,550)" name="Pin">
       <a name="tristate" val="false"/>
       <a name="label" val="GATE_K"/>
     </comp>
+    <comp lib="0" loc="(60,600)" name="Pin">
+      <a name="tristate" val="false"/>
+      <a name="label" val="GATE_CLR_JK"/>
+    </comp>
+
+    <!-- Active-High Clear Inverter: produces ~CLR at (100,600) -->
+    <comp lib="1" loc="(100,600)" name="NOT Gate"/>
 
     <!-- Master Stage: 2 3-input NANDs at (190,450) and (190,550) -->
+    <!-- In Logisim size=30 NAND inputs are at X-40=(150). Pins at Y-10, Y, Y+10 -->
     <comp lib="1" loc="(190,450)" name="NAND Gate">
       <a name="size" val="30"/>
       <a name="inputs" val="3"/>
@@ -253,47 +257,53 @@ This file is intended to be loaded by Logisim (http://www.cburch.com/logisim/).
       <a name="inputs" val="3"/>
     </comp>
 
-    <!-- Master Latch: 2 cross-coupled NANDs at (260,460) and (260,540) -->
-    <comp lib="1" loc="(260,460)" name="NAND Gate">
+    <!-- Master Latch: 
+         Top NAND at (270,460): 2 inputs at (230,450) and (230,470)
+         Bottom NAND at (270,540): 3 inputs at (230,530), (230,540), (230,550)
+    -->
+    <comp lib="1" loc="(270,460)" name="NAND Gate">
       <a name="size" val="30"/>
       <a name="inputs" val="2"/>
     </comp>
-    <comp lib="1" loc="(260,540)" name="NAND Gate">
+    <comp lib="1" loc="(270,540)" name="NAND Gate">
+      <a name="size" val="30"/>
+      <a name="inputs" val="3"/>
+    </comp>
+
+    <!-- Clock Inverter for Slave Stage: loc=(290,500), in at (260,500) -->
+    <comp lib="1" loc="(290,500)" name="NOT Gate"/>
+
+    <!-- Slave Steering: 2 2-input NANDs at (350,460) and (350,540): inputs at X-40=(310) -->
+    <comp lib="1" loc="(350,460)" name="NAND Gate">
+      <a name="size" val="30"/>
+      <a name="inputs" val="2"/>
+    </comp>
+    <comp lib="1" loc="(350,540)" name="NAND Gate">
       <a name="size" val="30"/>
       <a name="inputs" val="2"/>
     </comp>
 
-    <!-- Clock Inverter for Slave Stage -->
-    <comp lib="1" loc="(280,500)" name="NOT Gate"/>
-
-    <!-- Slave Steering: 2 2-input NANDs at (340,460) and (340,540) -->
-    <comp lib="1" loc="(340,460)" name="NAND Gate">
+    <!-- Slave Latch:
+         Top NAND at (430,470): 2 inputs at (390,460) and (390,480)
+         Bottom NAND at (430,530): 3 inputs at (390,520), (390,530), (390,540)
+    -->
+    <comp lib="1" loc="(430,470)" name="NAND Gate">
       <a name="size" val="30"/>
       <a name="inputs" val="2"/>
     </comp>
-    <comp lib="1" loc="(340,540)" name="NAND Gate">
+    <comp lib="1" loc="(430,530)" name="NAND Gate">
       <a name="size" val="30"/>
-      <a name="inputs" val="2"/>
-    </comp>
-
-    <!-- Slave Latch: 2 cross-coupled NANDs at (420,470) and (420,530) -->
-    <comp lib="1" loc="(420,470)" name="NAND Gate">
-      <a name="size" val="30"/>
-      <a name="inputs" val="2"/>
-    </comp>
-    <comp lib="1" loc="(420,530)" name="NAND Gate">
-      <a name="size" val="30"/>
-      <a name="inputs" val="2"/>
+      <a name="inputs" val="3"/>
     </comp>
 
     <!-- Gate-Level JK Outputs -->
-    <comp lib="0" loc="(480,470)" name="Pin">
+    <comp lib="0" loc="(490,470)" name="Pin">
       <a name="facing" val="west"/>
       <a name="output" val="true"/>
       <a name="label" val="GATE_Q_JK"/>
       <a name="labelloc" val="east"/>
     </comp>
-    <comp lib="0" loc="(480,530)" name="Pin">
+    <comp lib="0" loc="(490,530)" name="Pin">
       <a name="facing" val="west"/>
       <a name="output" val="true"/>
       <a name="label" val="GATE_~Q_JK"/>
@@ -301,75 +311,86 @@ This file is intended to be loaded by Logisim (http://www.cburch.com/logisim/).
     </comp>
 
     <!-- ================= WIRING FOR GATE-LEVEL JK ================= -->
-    <wire from="(70,450)" to="(160,450)"/>
-    <wire from="(70,550)" to="(160,550)"/>
+    <!-- Input J to (150,450) -->
+    <wire from="(60,450)" to="(150,450)"/>
+    <!-- Input K to (150,550) -->
+    <wire from="(60,550)" to="(150,550)"/>
 
-    <wire from="(70,500)" to="(120,500)"/>
-    <wire from="(120,500)" to="(120,460)"/>
-    <wire from="(120,460)" to="(160,460)"/>
-    <wire from="(120,500)" to="(120,540)"/>
-    <wire from="(120,540)" to="(160,540)"/>
-    <wire from="(120,500)" to="(250,500)"/>
+    <!-- Clock distribution to (150,460), (150,540), and (260,500) -->
+    <wire from="(60,500)" to="(110,500)"/>
+    <wire from="(110,500)" to="(110,460)"/>
+    <wire from="(110,460)" to="(150,460)"/>
+    <wire from="(110,500)" to="(110,540)"/>
+    <wire from="(110,540)" to="(150,540)"/>
+    <wire from="(110,500)" to="(260,500)"/>
 
+    <!-- Master Input NAND outputs to Master Latch -->
     <wire from="(190,450)" to="(230,450)"/>
-    <wire from="(190,550)" to="(230,550)"/>
+    <wire from="(190,550)" to="(230,540)"/>
 
-    <!-- Master Latch Cross-Coupling -->
-    <wire from="(260,460)" to="(280,460)"/>
-    <wire from="(280,460)" to="(280,480)"/>
-    <wire from="(280,480)" to="(220,480)"/>
-    <wire from="(220,480)" to="(220,530)"/>
-    <wire from="(220,530)" to="(230,530)"/>
-    <wire from="(280,460)" to="(310,460)"/>
+    <!-- Clear line (~CLR) from (100,600) to Master (230,550) and Slave (390,540) -->
+    <wire from="(60,600)" to="(70,600)"/>
+    <wire from="(100,600)" to="(230,600)"/>
+    <wire from="(230,600)" to="(230,550)"/>
+    <wire from="(230,600)" to="(390,600)"/>
+    <wire from="(390,600)" to="(390,540)"/>
+
+    <!-- Master Latch Cross-Coupling & Feedforward to Slave -->
+    <wire from="(270,460)" to="(290,460)"/>
+    <wire from="(290,460)" to="(310,460)"/>
     <wire from="(310,460)" to="(310,450)"/>
+    <wire from="(290,460)" to="(290,480)"/>
+    <wire from="(290,480)" to="(210,480)"/>
+    <wire from="(210,480)" to="(210,530)"/>
+    <wire from="(210,530)" to="(230,530)"/>
 
-    <wire from="(260,540)" to="(290,540)"/>
-    <wire from="(290,540)" to="(290,520)"/>
-    <wire from="(290,520)" to="(210,520)"/>
-    <wire from="(210,520)" to="(210,470)"/>
-    <wire from="(210,470)" to="(230,470)"/>
+    <wire from="(270,540)" to="(290,540)"/>
     <wire from="(290,540)" to="(310,540)"/>
     <wire from="(310,540)" to="(310,550)"/>
+    <wire from="(290,540)" to="(290,520)"/>
+    <wire from="(290,520)" to="(220,520)"/>
+    <wire from="(220,520)" to="(220,470)"/>
+    <wire from="(220,470)" to="(230,470)"/>
 
     <!-- Inverted Clock distribution to Slave Steering NANDs -->
-    <wire from="(280,500)" to="(300,500)"/>
+    <wire from="(290,500)" to="(300,500)"/>
     <wire from="(300,500)" to="(300,470)"/>
     <wire from="(300,470)" to="(310,470)"/>
     <wire from="(300,500)" to="(300,530)"/>
     <wire from="(300,530)" to="(310,530)"/>
 
     <!-- Slave Steering to Slave Latch -->
-    <wire from="(340,460)" to="(390,460)"/>
-    <wire from="(340,540)" to="(390,540)"/>
+    <wire from="(350,460)" to="(390,460)"/>
+    <wire from="(350,540)" to="(390,530)"/>
 
     <!-- Slave Latch Cross-Coupling & Outputs -->
-    <wire from="(420,470)" to="(440,470)"/>
-    <wire from="(440,470)" to="(480,470)"/>
-    <wire from="(440,470)" to="(440,490)"/>
-    <wire from="(440,490)" to="(380,490)"/>
-    <wire from="(380,490)" to="(380,520)"/>
-    <wire from="(380,520)" to="(390,520)"/>
+    <wire from="(430,470)" to="(450,470)"/>
+    <wire from="(450,470)" to="(490,470)"/>
+    <wire from="(450,470)" to="(450,490)"/>
+    <wire from="(450,490)" to="(370,490)"/>
+    <wire from="(370,490)" to="(370,520)"/>
+    <wire from="(370,520)" to="(390,520)"/>
 
-    <!-- Feedback from Q to NAND2 In3 (160,560) via lower rail y=590 -->
-    <wire from="(440,470)" to="(460,470)"/>
-    <wire from="(460,470)" to="(460,590)"/>
-    <wire from="(460,590)" to="(140,590)"/>
-    <wire from="(140,590)" to="(140,560)"/>
-    <wire from="(140,560)" to="(160,560)"/>
+    <!-- Feedback from Q to NAND2 In2 (150,560) via lower rail y=620 -->
+    <wire from="(450,470)" to="(470,470)"/>
+    <wire from="(470,470)" to="(470,620)"/>
+    <wire from="(470,620)" to="(130,620)"/>
+    <wire from="(130,620)" to="(130,560)"/>
+    <wire from="(130,560)" to="(150,560)"/>
 
-    <wire from="(420,530)" to="(450,530)"/>
-    <wire from="(450,530)" to="(480,530)"/>
-    <wire from="(450,530)" to="(450,510)"/>
-    <wire from="(450,510)" to="(370,510)"/>
-    <wire from="(370,510)" to="(370,480)"/>
-    <wire from="(370,480)" to="(390,480)"/>
+    <wire from="(430,530)" to="(460,530)"/>
+    <wire from="(460,530)" to="(490,530)"/>
+    <wire from="(460,530)" to="(460,510)"/>
+    <wire from="(460,510)" to="(380,510)"/>
+    <wire from="(380,510)" to="(380,480)"/>
+    <wire from="(380,480)" to="(390,480)"/>
 
-    <!-- Feedback from ~Q to NAND1 In1 (160,440) via upper rail y=420 -->
-    <wire from="(450,530)" to="(470,530)"/>
-    <wire from="(470,530)" to="(470,420)"/>
-    <wire from="(470,420)" to="(140,420)"/>
-    <wire from="(140,420)" to="(140,440)"/>
-    <wire from="(140,440)" to="(160,440)"/>
+    <!-- Feedback from ~Q to NAND1 In0 (150,440) via upper rail y=410 -->
+    <wire from="(460,530)" to="(480,530)"/>
+    <wire from="(480,530)" to="(480,410)"/>
+    <wire from="(480,410)" to="(130,410)"/>
+    <wire from="(130,410)" to="(130,440)"/>
+    <wire from="(130,440)" to="(150,440)"/>
 
 
     <!-- ================= PART D: GATE-LEVEL CLOCKED D FLIP-FLOP / LATCH ================= -->
@@ -391,37 +412,37 @@ This file is intended to be loaded by Logisim (http://www.cburch.com/logisim/).
       <a name="label" val="GATE_CLK_D"/>
     </comp>
 
-    <!-- Inverter for D input -->
+    <!-- Inverter for D input: loc=(640,550), in at (610,550) -->
     <comp lib="1" loc="(640,550)" name="NOT Gate"/>
 
-    <!-- Steering NANDs at (710,460) and (710,540) -->
-    <comp lib="1" loc="(710,460)" name="NAND Gate">
+    <!-- Steering NANDs at (720,460) and (720,540): inputs at X-40=(680) -->
+    <comp lib="1" loc="(720,460)" name="NAND Gate">
       <a name="size" val="30"/>
       <a name="inputs" val="2"/>
     </comp>
-    <comp lib="1" loc="(710,540)" name="NAND Gate">
+    <comp lib="1" loc="(720,540)" name="NAND Gate">
       <a name="size" val="30"/>
       <a name="inputs" val="2"/>
     </comp>
 
-    <!-- Cross-Coupled Storage NANDs at (810,470) and (810,530) -->
-    <comp lib="1" loc="(810,470)" name="NAND Gate">
+    <!-- Cross-Coupled Storage NANDs at (820,470) and (820,530): inputs at X-40=(780) -->
+    <comp lib="1" loc="(820,470)" name="NAND Gate">
       <a name="size" val="30"/>
       <a name="inputs" val="2"/>
     </comp>
-    <comp lib="1" loc="(810,530)" name="NAND Gate">
+    <comp lib="1" loc="(820,530)" name="NAND Gate">
       <a name="size" val="30"/>
       <a name="inputs" val="2"/>
     </comp>
 
     <!-- Gate-Level D Outputs -->
-    <comp lib="0" loc="(870,470)" name="Pin">
+    <comp lib="0" loc="(880,470)" name="Pin">
       <a name="facing" val="west"/>
       <a name="output" val="true"/>
       <a name="label" val="GATE_Q_D"/>
       <a name="labelloc" val="east"/>
     </comp>
-    <comp lib="0" loc="(870,530)" name="Pin">
+    <comp lib="0" loc="(880,530)" name="Pin">
       <a name="facing" val="west"/>
       <a name="output" val="true"/>
       <a name="label" val="GATE_~Q_D"/>
@@ -429,38 +450,38 @@ This file is intended to be loaded by Logisim (http://www.cburch.com/logisim/).
     </comp>
 
     <!-- ================= WIRING FOR GATE-LEVEL D ================= -->
-    <!-- Input D distribution -->
+    <!-- Input D distribution to (680,450) and inverter in (610,550) -->
     <wire from="(570,450)" to="(590,450)"/>
     <wire from="(590,450)" to="(680,450)"/>
     <wire from="(590,450)" to="(590,550)"/>
     <wire from="(590,550)" to="(610,550)"/>
 
-    <!-- Inverted D to lower NAND In2 (680,550) -->
+    <!-- Inverted D to lower NAND In1 (680,550) -->
     <wire from="(640,550)" to="(680,550)"/>
 
-    <!-- Input CLK_D distribution to both steering NANDs -->
+    <!-- Input CLK_D distribution to both steering NANDs at (680,470) and (680,530) -->
     <wire from="(570,500)" to="(650,500)"/>
     <wire from="(650,500)" to="(650,470)"/>
     <wire from="(650,470)" to="(680,470)"/>
     <wire from="(650,500)" to="(650,530)"/>
     <wire from="(650,530)" to="(680,530)"/>
 
-    <!-- Steering NANDs to Cross-Coupled Storage NANDs -->
-    <wire from="(710,460)" to="(780,460)"/>
-    <wire from="(710,540)" to="(780,540)"/>
+    <!-- Steering NANDs to Cross-Coupled Storage NANDs at (780,460) and (780,540) -->
+    <wire from="(720,460)" to="(780,460)"/>
+    <wire from="(720,540)" to="(780,540)"/>
 
     <!-- Cross-Coupled Storage Wires -->
-    <!-- Top Storage NAND Out (810,470) to Pin (870,470) and Cross down to NAND4 In1 (780,520) -->
-    <wire from="(810,470)" to="(840,470)"/>
-    <wire from="(840,470)" to="(870,470)"/>
+    <!-- Top Storage NAND Out (820,470) to Pin (880,470) and Cross down to NAND In0 (780,520) -->
+    <wire from="(820,470)" to="(840,470)"/>
+    <wire from="(840,470)" to="(880,470)"/>
     <wire from="(840,470)" to="(840,490)"/>
     <wire from="(840,490)" to="(760,490)"/>
     <wire from="(760,490)" to="(760,520)"/>
     <wire from="(760,520)" to="(780,520)"/>
 
-    <!-- Bottom Storage NAND Out (810,530) to Pin (870,530) and Cross up to NAND3 In2 (780,480) -->
-    <wire from="(810,530)" to="(850,530)"/>
-    <wire from="(850,530)" to="(870,530)"/>
+    <!-- Bottom Storage NAND Out (820,530) to Pin (880,530) and Cross up to NAND In1 (780,480) -->
+    <wire from="(820,530)" to="(850,530)"/>
+    <wire from="(850,530)" to="(880,530)"/>
     <wire from="(850,530)" to="(850,510)"/>
     <wire from="(850,510)" to="(770,510)"/>
     <wire from="(770,510)" to="(770,480)"/>
